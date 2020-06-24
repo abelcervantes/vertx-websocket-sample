@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - server
+    ports:
+      - "8080:8080"
+    restart: on-failure
+  core:
+    build: ./core
+    ports:
+      - "6060:6060"
+    restart: on-failure
+  server:
+    build: ./server
+    expose:
+      - "5050"
+    restart: on-failure
+  server2:
+    build: ./server2
+    ports:
+      - "5051:5051"
+    restart: on-failure
